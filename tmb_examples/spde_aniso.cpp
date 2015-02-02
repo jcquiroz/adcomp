@@ -8,6 +8,7 @@ Type objective_function<Type>::operator() ()
   using namespace density;
   using namespace Eigen;
 
+  DATA_INTEGER(flag); // flag=0 => only prior
   DATA_VECTOR(time);
   DATA_IVECTOR(notcens);
   DATA_IVECTOR(meshidxloc);
@@ -36,7 +37,10 @@ Type objective_function<Type>::operator() ()
   SparseMatrix<Type> Q = Q_spde(spde,kappa,H);
   REPORT(H)
 
-  nll = GMRF(Q)(x);                              // Negative log likelihood
+  // nll = GMRF(Q)(x);                              // Negative log likelihood
+  nll = .5 * (x * (Q * x.matrix()).array()).sum();  // Drop normalizing constant
+
+  if(flag==0)return nll;
 
   // Weibull likelihood with cencoring
   vector<Type> Xbeta = X*beta;  
