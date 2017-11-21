@@ -122,14 +122,14 @@ is the Base type value corresponding to this AD object.
 The tape identifier will be an invalid tape identifier,
 so this object is initially a parameter.
 */
-template <class Base>
-inline AD<Base>::AD(const Base &b)
-: value_(b)
-, tape_id_(0)
-, taddr_(0)
-{	// check that this is a parameter
-	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
-}
+// template <class Base>
+// inline AD<Base>::AD(const Base &b)
+// : value_(b)
+// , tape_id_(0)
+// , taddr_(0)
+// {	// check that this is a parameter
+// 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
+// }
 
 /*!
 Constructor from an ADVec<Base> element drops the vector information.
@@ -162,6 +162,17 @@ inline AD<Base>::AD(const T &t)
 , tape_id_(0)
 , taddr_(0)
 { }
+
+// Added by Kasper
+#define CTOR_FROM(TYPE)                         \
+template <class Base>                           \
+inline AD<Base>::AD(const TYPE &t)              \
+: value_(Base(t))                               \
+, tape_id_(0)                                   \
+, taddr_(0)                                     \
+{ }
+  CTOR_FROM(double)
+#undef CTOR_FROM
 
 } // END_CPPAD_NAMESPACE
 # endif
