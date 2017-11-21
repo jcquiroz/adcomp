@@ -169,7 +169,7 @@ public:
 	// inline AD& operator=(const AD &x);
 
 	// implicit construction and assingment from base type
-	inline AD(const Base &b);
+	// inline AD(const Base &b);
 	inline AD& operator=(const Base &b);
 
 	// implicit contructor and assignment from VecAD<Base>::reference
@@ -178,6 +178,11 @@ public:
 
 	// explicit construction from some other type (depricated)
 	template <class T> inline explicit AD(const T &t);
+
+	// Kasper: explicit CTOR does not allow e.g. 'AD<AD<double> > x = 0;'
+#define CTOR_FROM(TYPE) inline AD(const TYPE &t);
+  CTOR_FROM(double)
+#undef CTOR_FROM
 
 	// assignment from some other type
 	template <class T> inline AD& operator=(const T &right);
