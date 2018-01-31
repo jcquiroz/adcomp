@@ -50,7 +50,7 @@ gdbsource <- function(file,interactive=FALSE){
   ## Ensure Rterm is on PATH:
   OPATH <- Sys.getenv("PATH")
   on.exit(Sys.setenv(PATH = OPATH))
-  NPATH <- paste0(paste(R.home(),"bin",sep="/"), ":", OPATH)
+  NPATH <- paste0(paste(R.home(),"bin/x64",sep="/"), ";", OPATH)
   Sys.setenv(PATH = NPATH)
   ## Make gdbscript
   gdbscript <- tempfile()
