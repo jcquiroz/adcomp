@@ -46,12 +46,18 @@ gdbsource <- function(file,interactive=FALSE){
   }
 }
 ## Windows case
-.gdbsource.win <- function(file,interactive=FALSE){
+.gdbsource.win <- function(file,interactive=FALSE,gdbcmd="gdb64"){
+  ## Ensure Rterm is on PATH:
+  OPATH <- Sys.getenv("PATH")
+  on.exit(Sys.setenv(PATH = OPATH))
+  NPATH <- paste0(paste(R.home(),"bin",sep="/"), ":", OPATH)
+  Sys.setenv(PATH = NPATH)
+  ## Make gdbscript
   gdbscript <- tempfile()
   txt <- paste("set breakpoint pending on\nb abort\nrun --vanilla -f",
                file, "\nbt\n")
   cat(txt, file=gdbscript)
-  cmd <- paste("gdb Rterm -x", gdbscript)
+  cmd <- paste(gdbcmd, "Rterm -x", gdbscript)
   if(interactive){
     cmd <- paste("start",cmd)
     shell(cmd)
