@@ -215,9 +215,9 @@ atomic::dynamic_data::cpy(name,                         \
       atomic::dynamic_data::envir_lookup_by_name(       \
         atomic::dynamic_data::set_dependent(            \
           atomic::dynamic_data::sexp_to_double(         \
-            ENCLOS(this->report)                        \
+            ENCLOS(TMB_OBJECTIVE_PTR -> report)         \
           ),                                            \
-          this->theta[0]                                \
+          TMB_OBJECTIVE_PTR -> theta[0]                 \
         ),                                              \
         "data"                                          \
       ),                                                \
