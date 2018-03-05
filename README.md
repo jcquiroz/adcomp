@@ -1,4 +1,4 @@
-Template Model Builder (TMB)
+Template Model Builder (TMB-jcq)
 ============================
 
 [![Build Status](https://travis-ci.org/kaskr/adcomp.svg?branch=master)](https://travis-ci.org/kaskr/adcomp)
